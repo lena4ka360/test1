@@ -1,4 +1,4 @@
-# [Абзац Markdown.] (Пример:)
+# [Абзац Markdown. Пример:](new_doc.md)
 
 Lorem ipsum dolor sit amet... 
 
