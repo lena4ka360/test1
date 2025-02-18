@@ -1,0 +1,12 @@
+# Query: Абзац 
+# ContextLines: 1
+
+2 results - 2 files
+
+new_doc.md:
+  1: # Новый текст Markdown. Пример:
+  2  ghhhh
+
+olddoc.md:
+  1: # [Новый текст Markdown. Пример:](new_doc.md)
+  2  
