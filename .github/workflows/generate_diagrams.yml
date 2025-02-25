@@ -1,0 +1,33 @@
+name: Generate PlantUML Diagrams
+
+on:
+  push:
+    branches:
+      - main  # или ваша основная ветка
+
+jobs:
+  generate-diagrams:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Java and PlantUML
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-jdk
+          wget https://net.sourceforge.jp/projects/plantuml/downloads/plantuml.jar
+
+      - name: Generate diagrams
+        run: |
+          java -jar plantuml.jar diagram.puml -o images/
+          # Если у вас несколько файлов, используйте wildcard
+          # java -jar plantuml.jar *.puml -o images/
+
+      - name: Commit and push generated images
+        run: |
+          git config --local user.email "you@example.com"
+          git config --local user.name "Your Name"
+          git add images/*
+          git commit -m "Обновлены сгенерированные диаграммы" || echo "Нет изменений для коммита"
+          git push
