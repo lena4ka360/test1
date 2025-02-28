@@ -6,20 +6,4 @@ Lorem ipsum dolor sit amet...
 **Абзацы создаются при помощи пустой строки.**
 
 [Это ссылка на старый документ](olddoc.md)
-```plantuml
-@startuml
-actor "Front" as front
-participant "Сервис справок" as report
-database "База данных" as db
-front -> report: Получение список справок
-activate report
-report -> db:  Получение список справок из бд
-activate db
-db --> report:  Список справок
-db --> report:  Список справок
-deactivate db
-report -> front: Список справок
-deactivate report
-@enduml
-```
-![My Diagram](images/diagram.png)
+![My Diagram](C:\Users\1\test1\images\diagram.puml)
