@@ -3,31 +3,35 @@ name: Generate PlantUML Diagrams
 on:
   push:
     branches:
-      - main  # или ваша основная ветка
+      - main
 
 jobs:
   generate-diagrams:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install Java and PlantUML
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y default-jdk
-          wget https://net.sourceforge.jp/projects/plantuml/downloads/plantuml.jar
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Download PlantUML
+        run: wget https://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O plantuml.jar
 
       - name: Generate diagrams
         run: |
-          java -jar plantuml.jar diagram.puml -o images/
-          # Если у вас несколько файлов, используйте wildcard
-          # java -jar plantuml.jar *.puml -o images/
+          mkdir -p images
+          java -jar plantuml.jar *.puml -o images/
 
       - name: Commit and push generated images
         run: |
-          git config --local user.email "you@example.com"
-          git config --local user.name "Your Name"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Add only if there are changes
           git add images/*
-          git commit -m "Обновлены сгенерированные диаграммы" || echo "Нет изменений для коммита"
-          git push
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update generated diagrams" && git push
